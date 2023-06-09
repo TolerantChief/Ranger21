@@ -503,7 +503,7 @@ class Ranger21(TO.Optimizer):
             reduction = lr_range * warmdown_pct
             # print(f"lr reduction = {reduction} for {warmdown_pct} with iter {warmdown_iteration} and total iter {iteration}")
             new_lr = self.starting_lr - reduction
-            if new_lr < self.min_lr:
+            if (new_lr - self.min_lr) < -np.finfo(np.float64).eps:
                 print(f"error in warmdown - lr below min lr. current lr = {new_lr}")
                 print(f"auto handling but please report issue!")
                 new_lr = self.min_lr
